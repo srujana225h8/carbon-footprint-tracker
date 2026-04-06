@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Carbon Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .code-card {
+            width: 520px;
+        }
+        .tab-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tab {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #2c5364;
+            border-radius: 8px;
+            background: transparent;
+            color: #2c5364;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            width: auto;
+            margin-top: 0;
+        }
+        .tab.active {
+            background: linear-gradient(90deg, #11998e, #38ef7d);
+            border-color: transparent;
+            color: white;
+        }
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+            min-height: 180px;
+            background: #f8f9fa;
+        }
+        .upload-area {
+            border: 2px dashed #2c5364;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .upload-area:hover { background: #eaf4f4; }
+        .upload-area input[type=file] {
+            display: none;
+        }
+        .upload-label {
+            cursor: pointer;
+            display: block;
+            color: #2c5364;
+            font-weight: bold;
+        }
+        .supported {
+            font-size: 12px;
+            color: #777;
+            margin-top: 6px;
+        }
+        .error {
+            color: #c0392b;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 16px;
+        }
+        .filename-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .filename-row label {
+            font-size: 13px;
+            color: #555;
+            white-space: nowrap;
+        }
+        .filename-row input {
+            flex: 1;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container code-card">
+    <h2>💻 Code Carbon Analyzer</h2>
+    <p style="text-align:center; color:#555; font-size:14px; margin-bottom:20px;">
+        Estimate the carbon footprint of running your code.
+    </p>
+
+    {% if error %}
+    <div class="error">⚠️ {{ error }}</div>
+    {% endif %}
+
+    <div class="tab-bar">
+        <button class="tab active" onclick="switchTab('upload', this)">📁 Upload File</button>
+        <button class="tab" onclick="switchTab('paste', this)">📋 Paste Code</button>
+    </div>
+
+    <!-- Upload panel -->
+    <form method="POST" action="/analyze-code" enctype="multipart/form-data" id="upload-form">
+        <div class="panel active" id="panel-upload">
+            <div class="upload-area" onclick="document.getElementById('file-input').click()">
+                <label class="upload-label" for="file-input">
+                    🗂️ Click to choose a code file
+                    <input type="file" id="file-input" name="code_file"
+                           accept=".py,.js,.ts,.java,.cpp,.c,.cs,.rb,.go,.rs,.php,.swift,.kt,.r"
+                           onchange="showFileName(this)">
+                </label>
+                <span id="file-name-display" class="supported">No file selected</span>
+                <div class="supported">Supported: .py .js .ts .java .cpp .c .cs .rb .go .rs .php .swift .kt .r</div>
+            </div>
+            <button type="submit">⚡ Analyze Emissions</button>
+        </div>
+    </form>
+
+    <!-- Paste panel -->
+    <form method="POST" action="/analyze-code" id="paste-form">
+        <div class="panel" id="panel-paste">
+            <div class="filename-row">
+                <label>Filename:</label>
+                <input type="text" name="filename" placeholder="e.g. script.py" value="script.py">
+            </div>
+            <textarea name="code_text" placeholder="# Paste your code here..."></textarea>
+            <button type="submit">⚡ Analyze Emissions</button>
+        </div>
+    </form>
+
+    <a href="/" class="back-link">⬅ Back to Carbon Footprint Analyzer</a>
+</div>
+
+<script>
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + name).classList.add('active');
+}
+
+function showFileName(input) {
+    const display = document.getElementById('file-name-display');
+    display.textContent = input.files[0] ? input.files[0].name : 'No file selected';
+}
+</script>
+</body>
+</html>

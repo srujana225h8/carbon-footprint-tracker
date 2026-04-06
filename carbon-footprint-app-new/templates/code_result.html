@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Carbon Result</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .code-result {
+            width: 520px;
+        }
+        .badge-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        .badge {
+            background: #eaf4f4;
+            border: 1px solid #b2dfdb;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 13px;
+            color: #2c5364;
+            font-weight: 600;
+        }
+        .emission-value {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #11998e, #38ef7d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 4px 0;
+        }
+        .emission-unit {
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 6px;
+        }
+        .complexity-bar-wrap {
+            margin: 12px 0;
+        }
+        .complexity-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 4px;
+        }
+        .complexity-bar {
+            height: 10px;
+            background: #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .complexity-fill {
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #38ef7d, #f9ca24, #e74c3c);
+            transition: width 1s ease;
+        }
+        .ops-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .op-cell {
+            background: #f0f4f8;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+        }
+        .op-name {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .op-count {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f2027;
+        }
+        .recs {
+            text-align: left;
+            margin-top: 14px;
+        }
+        .recs li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .equiv {
+            background: linear-gradient(135deg, #eaf4f4, #f0fff0);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 14px 0;
+            font-size: 13px;
+            color: #2c5364;
+        }
+        .equiv strong { display: block; margin-bottom: 4px; color: #0f2027; }
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #203a43;
+            margin: 16px 0 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container code-result" style="text-align:center;">
+    <h2>💻 Code Emission Report</h2>
+    <div style="font-size:13px; color:#777; margin-bottom:8px;">{{ filename }}</div>
+
+    <div class="badge-row">
+        <span class="badge">🌐 {{ language }}</span>
+        <span class="badge">📄 {{ loc }} lines</span>
+        <span class="badge">⏱ {{ exec_time_ms }} ms</span>
+        <span class="badge">⚡ {{ energy_nj }} nJ</span>
+    </div>
+
+    <div class="emission-value">{{ carbon_mg }}</div>
+    <div class="emission-unit">mg CO₂ emitted per run</div>
+
+    <div class="complexity-bar-wrap">
+        <div class="complexity-label">
+            <span>Code Complexity</span>
+            <span>{{ complexity }}/100</span>
+        </div>
+        <div class="complexity-bar">
+            <div class="complexity-fill" style="width: {{ complexity }}%;"></div>
+        </div>
+    </div>
+
+    <div class="equiv">
+        <strong>🌍 Real-World Equivalent</strong>
+        {% set runs_per_gram = (1000 / carbon_mg)|round(0, 'floor')|int if carbon_mg > 0 else 999999 %}
+        {% if carbon_mg < 0.01 %}
+            This is negligible — equivalent to &lt;1 second of LED lighting.
+        {% elif carbon_mg < 1 %}
+            Running this {{ runs_per_gram }} times equals ~1 mg CO₂ — like breathing once.
+        {% else %}
+            Each run ≈ leaving a phone screen on for {{ (carbon_mg / 0.28)|round(1) }} seconds.
+        {% endif %}
+    </div>
+
+    <div class="section-title">🔬 Operation Breakdown</div>
+    <div class="ops-grid">
+        {% for op, count in op_counts.items() %}
+        {% if count > 0 %}
+        <div class="op-cell">
+            <div class="op-name">{{ op }}</div>
+            <div class="op-count">{{ count }}</div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="recs">
+        <div class="section-title">🌱 Recommendations</div>
+        <ul>
+            {% for r in recommendations %}
+            <li>{{ r }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <br>
+    <a href="/analyze-code">⬅ Analyze Another File</a>
+    &nbsp;|&nbsp;
+    <a href="/">🏠 Home</a>
+</div>
+</body>
+</html>

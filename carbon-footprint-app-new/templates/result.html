@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container result-box">
+    <h2>📊 Your Daily Carbon Emission</h2>
+
+    <h1>{{ emission }} kg</h1>
+    <div class="level">CO₂ per day</div>
+
+    <div class="recommendations">
+        <h3>🌍 Recommendations</h3>
+        <ul>
+            {% for r in recommendations %}
+                <li>{{ r }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <br>
+    <a href="/">⬅ Calculate Again</a>
+</div>
+
+</body>
+</html>

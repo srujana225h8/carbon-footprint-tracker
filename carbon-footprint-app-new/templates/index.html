@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carbon Footprint Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>🌱 Carbon Footprint Analyzer</h2>
+
+    <form method="POST" action="/predict">
+
+        <h3>🏠 Home Energy</h3>
+        <input name="energy" type="number" step="0.1" placeholder="Energy usage (kWh)" required>
+        <input name="renewable" type="number" placeholder="Renewable energy (%)" required>
+        <input name="appliance" type="number" step="0.1" placeholder="Appliance usage (hours)" required>
+
+        <h3>🚗 Daily Commute</h3>
+
+        <a href="https://srujana225h8.github.io/carbon-tracker-mobile/" target="_blank">
+            📱 Open Mobile Commute Tracker
+        </a>
+
+        <input name="tracking_code" placeholder="Paste tracking code (optional)">
+
+        <div class="divider">OR</div>
+
+        <input name="distance" type="number" step="0.1" placeholder="Distance (km)">
+        
+        <select name="vehicle">
+            <option value="Car">Car</option>
+            <option value="Motorcycle">Motorcycle</option>
+            <option value="Bus">Bus</option>
+            <option value="Metro">Metro</option>
+            <option value="Electric Vehicle">Electric Vehicle</option>
+            <option value="Bicycle">Bicycle</option>
+            <option value="Walking">Walking</option>
+            <option value="Carpool">Carpool</option>
+        </select>
+
+        <button type="submit">Calculate Emission</button>
+    </form>
+
+    <div style="margin-top:20px; text-align:center; padding-top:16px; border-top:1px solid #ddd;">
+        <a href="/analyze-code" style="font-size:14px;">💻 Analyze Code File Carbon Emission →</a>
+    </div>
+</div>
+
+</body>
+</html>

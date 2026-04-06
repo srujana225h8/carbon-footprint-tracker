@@ -1,0 +1,136 @@
+/* ---------- Global ---------- */
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #0f2027,
+        #203a43,
+        #2c5364
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #222;
+}
+
+/* ---------- Card ---------- */
+.container {
+    width: 430px;
+    padding: 30px;
+    background: linear-gradient(
+        145deg,
+        #ffffff,
+        #f0f4f8
+    );
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+/* ---------- Headings ---------- */
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #0f2027;
+}
+
+h3 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #203a43;
+}
+
+/* ---------- Inputs ---------- */
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #2c5364;
+}
+
+/* ---------- Button ---------- */
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    background: linear-gradient(
+        90deg,
+        #11998e,
+        #38ef7d
+    );
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* ---------- Links ---------- */
+a {
+    color: #11998e;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Divider ---------- */
+.divider {
+    text-align: center;
+    margin: 15px 0;
+    font-weight: bold;
+    color: #777;
+}
+
+/* ---------- Result Page ---------- */
+.result-box {
+    text-align: center;
+}
+
+.result-box h1 {
+    font-size: 42px;
+    margin: 10px 0;
+    background: linear-gradient(
+        90deg,
+        #11998e,
+        #38ef7d
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.level {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.recommendations {
+    text-align: left;
+    margin-top: 15px;
+}
+
+.recommendations li {
+    margin-bottom: 8px;
+}
